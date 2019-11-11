@@ -48,6 +48,17 @@ public class EmployeeDoublyLinkedList {
 
     }
 
+    public boolean contains(Employee employee){
+        EmployeeNode current = head ;
+        while (current != null){
+            if(current.getEmployee().equals(employee)){
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+
     public boolean isEmpty(){
         return head == null;
     }
@@ -86,5 +97,38 @@ public class EmployeeDoublyLinkedList {
         removedNode.setPrevious(null);
         return removedNode;
     }
+
+    public boolean addToBefore (Employee newEmployee, Employee existingEmployee){
+
+        if(isEmpty()){
+            return false;
+        }
+        EmployeeNode newNode = new EmployeeNode(newEmployee);
+
+        EmployeeNode current = head;
+
+        while(current != null){
+
+            if(current.getEmployee().equals(existingEmployee)){
+                if(current == head){
+                    addToFront(newEmployee);
+                } else {
+                    current.getPrevious().setNext(newNode);
+                    newNode.setNext(current);
+                    size++;
+                }
+
+                return true;
+            }
+            current = current.getNext();
+        }
+
+        return false;
+    }
+
+
+
+
+
 
 }

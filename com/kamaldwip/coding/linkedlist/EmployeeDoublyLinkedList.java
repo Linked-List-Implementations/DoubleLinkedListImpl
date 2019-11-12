@@ -113,8 +113,10 @@ public class EmployeeDoublyLinkedList {
                 if(current == head){
                     addToFront(newEmployee);
                 } else {
-                    current.getPrevious().setNext(newNode);
+                    newNode.setPrevious(current.getPrevious());
                     newNode.setNext(current);
+                    current.setPrevious(newNode);
+                    newNode.getPrevious().setNext(newNode);
                     size++;
                 }
 
@@ -127,7 +129,34 @@ public class EmployeeDoublyLinkedList {
     }
 
 
+    public boolean addAfter(Employee newEmployee, Employee existingEmployee){
 
+        if(isEmpty()){
+            return false;
+        }
+
+        EmployeeNode newNode = new EmployeeNode(newEmployee);
+
+        EmployeeNode current = head;
+
+        while(current != null){
+            if(current.getEmployee().equals(existingEmployee)){
+                if(current == tail){
+                    addToEnd(newEmployee);
+                } else {
+                    newNode.setNext(current.getNext());
+                    newNode.setPrevious(current);
+                    current.setNext(newNode);
+                    newNode.getNext().setPrevious(newNode);
+                    size++;
+                }
+                return true;
+            }
+            current = current.getNext();
+        }
+
+        return false;
+    }
 
 
 
